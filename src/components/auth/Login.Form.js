@@ -21,7 +21,6 @@ class LoginForm extends React.Component {
     e.preventDefault()
     await this.props.onSubmit(this.state)
     this.props.history.push('/')
-    
   }
 
   render () {

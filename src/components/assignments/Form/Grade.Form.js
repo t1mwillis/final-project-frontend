@@ -37,7 +37,8 @@ export default class GradeForm extends React.Component {
             id='score'
             onChange={this.handleChange}
             name='score'
-            type='text'
+            type='number'
+            min='0'
             value={this.state.score} />
         </div>
         <p>Out Of</p>
@@ -48,7 +49,8 @@ export default class GradeForm extends React.Component {
             id='maxScore'
             onChange={this.handleChange}
             name='maxScore'
-            type='text'
+            type='number'
+            min='0'
             value={this.state.maxScore} />
         </div>
         </div>

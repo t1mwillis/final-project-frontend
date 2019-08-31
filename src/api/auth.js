@@ -7,7 +7,7 @@ export const login = async (user) => {
     const response = await fetch(`${BASE_URL}/api/login`, {
         body: JSON.stringify(user),
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
         method: 'POST'
     })
@@ -23,7 +23,7 @@ export const signup = async (user) => {
         },
         method: 'POST'
     })
-    const json = response.json()
+    const json = await response.json()
     return json
 }
 

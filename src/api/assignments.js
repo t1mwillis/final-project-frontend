@@ -20,7 +20,6 @@ export const updateAssignment = ({user, assignment}) => {
 
 export const gradeAssignment = ({user, assignment}) => {
     const path = `/api/users/${user._id}/assignments/${assignment._id}/score`
-    console.log(path, assignment)
     const options = { body: assignment, method: 'PUT' }
     return request(path, options)
 }

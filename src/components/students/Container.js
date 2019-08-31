@@ -8,7 +8,6 @@ import * as apiAssign from '../../api/assignments'
 import List from './List/List'
 import AssignmentList from '../assignments/List/List'
 
-import AssignmentsContainer from '../assignments/Container'
 import EditForm from '../assignments/Form/Edit.Form'
 import NewForm from '../assignments/Form/New.Form'
 import AdminList from '../assignments/List/Admin.List'
@@ -19,7 +18,11 @@ class Container extends React.Component {
     this.state = {
       users: [],
       loading: true,
-      profile: {}
+      profile: {},
+      alert: {
+        message: '',
+        type: ''
+      }
     }
 
     this.refreshUsers = this.refreshUsers.bind(this)
@@ -53,54 +56,55 @@ class Container extends React.Component {
   
   async createAssignment (assignment) {
       const { currentUserId, history } = this.props
-      console.log('Submitting Assignment: ', assignment)
       await apiAssign.createAssignment({user: {_id: currentUserId}, assignment})
       await this.refreshProfile(currentUserId)
+      this.setState({alert: {message: `Created assignment: ${assignment.title}`, action: `create`}})
       history.push(`/`)
   }
 
   async editAssignment (assignment) {
       const { currentUserId, history } = this.props
-      console.log('Editing Assignment:', assignment)
       await apiAssign.updateAssignment({user: {_id: currentUserId}, assignment})
       await this.refreshProfile(currentUserId)
+      this.setState({alert: {message: `Edited assignment: ${assignment.title}`, action: `edit`}})
       history.push(`/`)
   }
 
   async gradeAssignment (user, assignment) {
-      console.log('Grading Assignment:', assignment)
       await apiAssign.gradeAssignment({user, assignment})
       await this.refreshUsers()
+      this.setState({alert: {message: `Graded assignment!`, action: `grade`}})
   }
 
   async destroyAssignment (assignment) {
       const { currentUserId, history } = this.props
-      console.log('Deleting Assignment:', assignment)
       await apiAssign.destroyAssignment({user: { _id: currentUserId }, assignment})
       await this.refreshProfile(currentUserId)
+      this.setState({alert: {message: `Deleted assignment: ${assignment.title}`, action: `delete`}})
       history.push(`/`)
   }
 
   render () {
     const { currentUserId, admin } = this.props
-    const { users, loading, profile } = this.state
+    const { users, loading, profile, alert } = this.state
+
     if(loading) return <p>Loading...</p>
     return (
       <main className='container'>
 
         <Route path='/' exact component={() => {
           return admin ? <Redirect to="/students" /> : (
-            <AssignmentList currentUserId={currentUserId} destroyAssignment={this.destroyAssignment} profile={profile} />
+            <AssignmentList currentUserId={currentUserId} destroyAssignment={this.destroyAssignment} profile={profile} alert={alert} />
           )
         }} />
 
         <Route path='/students' exact component={() => <List users={users} admin={admin}/>} />
 
         <Route path='/assignments/ungraded' exact component={() => {
-            return admin ? <AdminList currentUserId={currentUserId} users={users} profile={profile} gradeAssignment={this.gradeAssignment} refreshUsers={this.refreshUsers}/> : <Redirect to='/' />
+            return admin ? <AdminList currentUserId={currentUserId} users={users} graded={false} profile={profile} gradeAssignment={this.gradeAssignment} refreshUsers={this.refreshUsers} alert={alert}/> : <Redirect to='/' />
         }} />
         <Route path='/assignments/graded' exact component={() => {
-            return admin ? <AdminList currentUserId={currentUserId} users={users} profile={profile} gradeAssignment={this.gradeAssignment} refreshUsers={this.refreshUsers}/> : <Redirect to='/' />
+            return admin ? <AdminList currentUserId={currentUserId} users={users} graded={true} profile={profile} gradeAssignment={this.gradeAssignment} refreshUsers={this.refreshUsers} alert={alert}/> : <Redirect to='/' />
         }} />
         <Route path='/assignments/new' exact component={() => {
           return !admin ? <NewForm onSubmit={this.createAssignment} /> : <Redirect to='/' />

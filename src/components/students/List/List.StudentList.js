@@ -10,5 +10,7 @@ export default ({users}) => {
         </li>
       ))
 
-    return list
+    return <ul className="list-group">
+        { list }
+    </ul>
 }

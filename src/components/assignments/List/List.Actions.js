@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 
-export default ({ currentUserId, destroyAssignment, assignment, user, profile }) => (
+export default ({ currentUserId, destroyAssignment, assignment, profile }) => (
   <div className='card-footer text-muted d-flex justify-content-around'>
     {
       currentUserId === profile._id 

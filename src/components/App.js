@@ -42,11 +42,11 @@ class App extends React.Component {
     async loginUser (user){
         const response = await auth.login(user)
         if(response.status !== 200) {
-            this.setState({ errors: {login: [response.message]}})
+            this.setState({ errors: {login: [response.message], signup: []}, })
         } else {
             await token.setToken(response)
             const profile = await auth.profile()
-            this.setState({ currentUserId: profile.user._id, admin: profile.user.admin })
+            this.setState({ currentUserId: profile.user._id, admin: profile.user.admin, errors: {login: [], signup: []} })
         }
     }
 
@@ -59,7 +59,7 @@ class App extends React.Component {
         const response = await auth.signup(user)
         if(response.status !== 201) {
             console.log(response)
-            this.setState({errors:{ signup: [response.message]} })
+            this.setState({errors:{ signup: [response.message], login: [] }})
         } else {
             await token.setToken(response)
             const profile = await auth.profile()
