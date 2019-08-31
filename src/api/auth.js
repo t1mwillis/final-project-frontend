@@ -1,9 +1,7 @@
 import request from './request.js'
 
-const { NODE_ENV } = process.env
-const BASE_URL = NODE_ENV === 'development'
-    ? 'http://localhost:5000'
-    : 'tbd'
+const { REACT_APP_API_DOMAIN } = process.env
+const BASE_URL = REACT_APP_API_DOMAIN
 
 export const login = async (user) => {
     const response = await fetch(`${BASE_URL}/api/login`, {

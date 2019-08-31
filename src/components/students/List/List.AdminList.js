@@ -30,7 +30,7 @@ export default ({users}) => {
     const adminList = users.map(user => (
         <li className='card mb-3' key={user._id}>
             <div className='card-body row'>
-                <p className='col-sm-10'>{user.firstName} {user.lastName} - {user.email}</p>
+                <p className='col-sm-10'><strong>{user.firstName} {user.lastName}</strong> - {user.email}</p>
                 <p className='col-sm-2'>
                     {user.grade
                         ? `${user.grade} / 100`

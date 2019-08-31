@@ -9,7 +9,8 @@ export default ({ gradeAssignment, assignment, user, refreshUsers }) => (
         <GradeForm 
             assignment={assignment}
             onSubmit={gradeAssignment}
-            resfreshUsers={refreshUsers}
+            refreshUsers={refreshUsers}
+            user={user}
         />
         </>
     }

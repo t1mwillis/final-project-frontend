@@ -17,11 +17,14 @@ export default class GradeForm extends React.Component {
 
   handleSubmit (e) {
     e.preventDefault()
-    const { assignment } = this.props
-    
+    const { assignment, refreshUsers, user } = this.props
+    console.log(assignment)
+    console.log(this.state)
+    console.log(refreshUsers)
     if (assignment && assignment._id) {
       const body = Object.assign({}, this.state, {_id: assignment._id})
-      this.props.onSubmit(body)
+      console.log(body)
+      this.props.onSubmit(user, body)
     } else {
       this.props.onSubmit(this.state)
     }

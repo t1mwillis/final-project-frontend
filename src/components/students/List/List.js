@@ -3,6 +3,8 @@ import React from 'react'
 import AdminList from './List.AdminList'
 import StudentList from './List.StudentList'
 
+import FilterForm from '../Form/Filter.Form'
+
 export default ({ users, admin }) => {
 
   return (
@@ -10,7 +12,7 @@ export default ({ users, admin }) => {
     { admin 
         ? ( 
             <>
-            <p>Filter form goes here</p>
+            <FilterForm />
             <ul>
                 <AdminList users={users}/>
             </ul>

@@ -8,8 +8,8 @@ import * as token from '../helpers/local-storage'
 //components
 import Header from './shared/Header'
 import Navigation from './shared/Navigation/Navigation'
-import Login from './auth/Login.Form'
-import Signup from './auth/Signup.Form'
+import LoginForm from './auth/Login.Form'
+import SignupForm from './auth/Signup.Form'
 import StudentsContainer from './students/Container'
 
 class App extends React.Component {
@@ -18,7 +18,11 @@ class App extends React.Component {
         this.state = {
             currentUserId: null,
             loading: true,
-            admin: false
+            admin: false,
+            errors: {
+                signup: [],
+                login: []
+            }
         }
 
         this.loginUser = this.loginUser.bind(this)
@@ -37,10 +41,13 @@ class App extends React.Component {
 
     async loginUser (user){
         const response = await auth.login(user)
-        await token.setToken(response)
-        const profile = await auth.profile()
-        console.log(profile)
-        this.setState({ currentUserId: profile.user._id, admin: profile.user.admin })
+        if(response.status !== 200) {
+            this.setState({ errors: {login: [response.message]}})
+        } else {
+            await token.setToken(response)
+            const profile = await auth.profile()
+            this.setState({ currentUserId: profile.user._id, admin: profile.user.admin })
+        }
     }
 
     logoutUser () {
@@ -50,13 +57,19 @@ class App extends React.Component {
 
     async signupUser (user) {
         const response = await auth.signup(user)
-        await token.setToken(response)
-        const profile = await auth.profile()
-        this.setState({ currentUserId: profile.user._id, admin: profile.user.admin })
+        if(response.status !== 201) {
+            console.log(response)
+            this.setState({errors:{ signup: [response.message]} })
+        } else {
+            await token.setToken(response)
+            const profile = await auth.profile()
+            this.setState({ currentUserId: profile.user._id, admin: profile.user.admin })
+        }
+        
     } 
 
     render () {
-        const { currentUserId, loading, admin } = this.state
+        const { currentUserId, loading, admin, errors } = this.state
         if(loading) return <p>Loading...</p>
         return (
             
@@ -65,13 +78,12 @@ class App extends React.Component {
                 <Navigation currentUserId={currentUserId} logoutUser={this.logoutUser} admin={admin}/>
                 <Switch>
                     <Route path='/login' exact component={() =>{
-                        return currentUserId ? <Redirect to='/' /> : <Login onSubmit={this.loginUser} />
+                        return currentUserId ? <Redirect to='/' /> : <LoginForm onSubmit={this.loginUser} errors={errors.login} />
                     }} />
                     <Route path='/signup' exact component={() =>{
-                        return currentUserId ? <Redirect to='/' /> : <Signup onSubmit={this.signupUser} />
+                        return currentUserId ? <Redirect to='/' /> : <SignupForm onSubmit={this.signupUser} errors={errors.signup} />
                     }} />
                     <Route path='/' render={() => {
-                        console.log(admin)
                         return currentUserId ? <StudentsContainer currentUserId={currentUserId} admin={admin}/> : <Redirect to='/login' />
                     }} />
 

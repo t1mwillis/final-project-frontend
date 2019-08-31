@@ -39,17 +39,20 @@ export default class Form extends React.Component {
             onChange={this.handleChange}
             name='title'
             type='text'
-            value={this.state.title} />
+            value={this.state.title}
+            required />
         </div>
         <div className='form-group'>
           <label htmlFor='link'>Link</label>
-          <textarea
+          <input
             className='form-control'
             id='link'
             onChange={this.handleChange}
             name='link'
-            type='text'
-            value={this.state.link} />
+            type='url'
+            value={this.state.link} 
+            pattern='https?://.+'
+            required/>
         </div>
         <div className='form-group'>
           <label htmlFor='description'>Description</label>
@@ -59,7 +62,8 @@ export default class Form extends React.Component {
             onChange={this.handleChange}
             name='description'
             type='textarea'
-            value={this.state.description} />
+            value={this.state.description} 
+            required/>
         </div>
         <button type='submit' className='btn btn-primary'>Submit</button>
       </form>

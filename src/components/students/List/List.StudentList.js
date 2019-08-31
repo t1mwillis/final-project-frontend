@@ -4,8 +4,8 @@ export default ({users}) => {
 
     const list = users.map(user => (
         <li className='card mb-3' key={user._id}>
-            <div clasName='card-body row'>
-            <p>{user.firstName} {user.lastName} - {user.email}</p>
+            <div className='card-body row'>
+            <p><strong>{user.firstName} {user.lastName}</strong> - {user.email}</p>
             </div>
         </li>
       ))
