@@ -31,7 +31,7 @@ export default ({users}) => {
         <li className='card mb-3' key={user._id}>
             <div className='card-body row'>
                 <p className='col-sm-10'><strong>{user.firstName} {user.lastName}</strong> - {user.email}</p>
-                <p className='col-sm-2'>
+                <p className='col-sm-2' style={{color: {color}}}>
                     {user.grade
                         ? `${user.grade} / 100`
                         : `TBD / 100`

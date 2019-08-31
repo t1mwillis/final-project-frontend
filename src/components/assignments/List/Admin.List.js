@@ -3,8 +3,6 @@ import React from 'react'
 import AdminActions from './Admin.List.Actions'
 
 export default ({ currentUserId, gradeAssignment, users, refreshUsers  }) => {
-  console.log(refreshUsers)
-  console.log(users)
   const assignments = users.map(user => (
     user.assignments.map(assignment => {
     return <div key={assignment._id} className='card mb-3'>
