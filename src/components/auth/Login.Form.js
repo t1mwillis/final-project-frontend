@@ -40,6 +40,7 @@ class LoginForm extends React.Component {
                 name='email'
                 type='email'
                 value={this.state.username} 
+                placeholder='email@example.com'
                 required />
             </div>
             <div className='form-group'>
@@ -50,7 +51,8 @@ class LoginForm extends React.Component {
                 onChange={this.handleChange}
                 name='password'
                 type='password'
-                value={this.state.password} 
+                value={this.state.password}
+                placeholder='min. 8 characters' 
                 required 
                 minLength='8' />
             </div>

@@ -2,15 +2,25 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import Actions from './List.Actions'
+import { color }  from '../../../helpers/color'
 
 export default ({ currentUserId, destroyAssignment, user, profile, alert  }) => {
   const assignments = profile.assignments.map(assignment => (
     <div key={assignment._id} className='card mb-3'>
-      <div className='card-body'>
-        <h2 className='card-text'>{ assignment.title }</h2>
-        <p className='card-text'>{ assignment.description } </p>
-        <p className='card-text'><a href={ assignment.link }>Project Link</a></p>
-
+      <div className='card-body row'>
+        <div className='col-sm-10'>
+          <h2 className='card-text'>{ assignment.title }</h2>
+          <p className='card-text'>{ assignment.description } </p>
+          <p className='card-text'><a href={ assignment.link }>Project Link</a></p>
+        </div>
+        <div className='col-sm2'>
+          <p style={{color: color(assignment.score) }}>
+          {assignment.score
+            ? `${assignment.score} / ${assignment.maxScore}`
+            : 'Grade TBD'
+          }
+          </p>
+        </div>
       </div>
       <Actions 
         currentUserId={currentUserId}

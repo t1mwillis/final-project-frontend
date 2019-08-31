@@ -43,6 +43,7 @@ class SignupForm extends React.Component {
                 name='email'
                 type='email'
                 value={this.state.username} 
+                placeholder='example@email.com'
                 required />
             </div>
             <div className='form-group'>
@@ -54,6 +55,7 @@ class SignupForm extends React.Component {
                 name='password'
                 type='password'
                 value={this.state.password} 
+                placeholder='min. length 8 characters'
                 required 
                 minLength='8' />
             </div>
@@ -66,6 +68,7 @@ class SignupForm extends React.Component {
                 name='firstName'
                 type='text'
                 value={this.state.firstName} 
+                placeholder='John'
                 required />
             </div>
             <div className='form-group'>
@@ -77,6 +80,7 @@ class SignupForm extends React.Component {
                 name='lastName'
                 type='text'
                 value={this.state.lastName} 
+                placeholder='Snow'
                 required />
             </div>
             <button type='submit' className='btn btn-primary'>Submit</button>

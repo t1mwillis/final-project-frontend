@@ -39,7 +39,8 @@ export default class GradeForm extends React.Component {
             name='score'
             type='number'
             min='0'
-            value={this.state.score} />
+            value={this.state.score} 
+            required />
         </div>
         <p>Out Of</p>
         <div className='w-25'>
@@ -51,7 +52,8 @@ export default class GradeForm extends React.Component {
             name='maxScore'
             type='number'
             min='0'
-            value={this.state.maxScore} />
+            value={this.state.maxScore} 
+            required />
         </div>
         </div>
         <button type='submit' className='btn btn-primary w-100'>Save</button>
